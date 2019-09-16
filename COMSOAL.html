@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+
+<html>
+	<head>
+		<title> Comsoal </title>
+		<meta charset="UTF-8">
+		<script type="text/javascript" src="http://code.jquery.com/jquery-1.7.1.min.js"></script>
+		<script type="text/javascript">
+		
+			var numbr = 0;
+
+			$(document).ready(function() {
+
+				$("input.btn_add").click(function(){
+
+					var doc = $("table.input_Mbox").html();
+					$("div#input_Lbox").append("<table class=\"input_Mbox\">"+doc+"</table>");
+
+					numbr++;
+					
+					var input_set_length = $("table.input_Mbox").length-1;					
+					$("table.input_Mbox:eq("+input_set_length+") input:eq(0)").attr("name","elementWork"+numbr);		
+					$("table.input_Mbox:eq("+input_set_length+") input:eq(1)").attr("name","elementWorkTime"+numbr);
+					$("table.input_Mbox:eq("+input_set_length+") input:eq(2)").attr("name","precedenceWork"+numbr);
+					$("table.input_Mbox:eq("+input_set_length+") input:eq(3)").attr("onclick","remove_table(this)");
+					$("table.input_Mbox:eq("+input_set_length+") input:eq(3)").attr("value","삭제");
+					
+				})
+   			});
+
+	   		function remove_table(obj){
+	   			var div_index = $("table.input_Mbox").index($(obj).parent().parent().parent().parent());
+	   			var div_length = $("table.input_Mbox").length;
+	   			for(var i=div_index;i<div_length;i++){
+	   				$("table.input_Mbox:eq("+i+") input:eq(0)").attr("name","elementWork"+(i-1));
+					$("table.input_Mbox:eq("+i+") input:eq(1)").attr("name","elementWorkTime"+(i-1));
+					$("table.input_Mbox:eq("+i+") input:eq(2)").attr("name","precedenceWork"+(i-1));
+	   			}
+	   			$(obj).parent().parent().parent().parent().remove();
+				
+				numbr--;
+		    }
+
+		</script>
+	</head>
+
+	<body>
+		<section> 
+			<form id="frm"  method="post" action="COMSOAL.php">		
+				<div id="zero">
+					<div>
+							<strong> <font size="15"> Comsoal </font> </strong> <br><br>
+							<strong>  생산시간(분/일) 및 생산량(개/일) </strong> or <strong> 생산주기(분)</strong>를 입력해 주십시오. &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <input type="submit" value="결과는?"> <br> 							
+							<input type="text" name= "workTime" style="width:110px"> &nbsp;&nbsp;&nbsp;
+							<input type="text" name= "production" style="width:90px"> &nbsp;&nbsp;&nbsp;&nbsp;
+							<input type="text" name= "cycleTime" style="width:80px">
+					</div>
+					<br><br>
+					<div id="input_Lbox">
+						<tr>
+							<td>
+								&emsp;&emsp;&emsp;&emsp;&emsp; 작업명 
+							</td>
+							<td>
+								&emsp;&emsp;&emsp;&emsp;&emsp;&emsp; 시간(분) 
+							</td>
+							<td>
+								&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp; 선행작업
+							</td>
+						</tr>
+						<table class="input_Mbox" >							
+							<tr>
+								
+								<td>
+									<input type="text" name="elementWork0" style="width:210px">
+								</td>	
+								<td>
+									<input type="text" name="elementWorkTime0" style="width:90px"> 
+								</td>
+								<td>
+									<input type="text" name="precedenceWork0" style="width:500px" placeholder=" 반드시 작업명란에 적은 이름과 동일하게 적어주시고 반점(,)으로 구분해 주십시오.">
+								</td>
+								<td> <input type="button" value="추가" class = "btn_add"> </td>
+							</tr>
+						</table>						
+					</div>
+				</div>
+			</form>
+		</section>
+	</body>
+</html>
